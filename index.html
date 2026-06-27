@@ -25,13 +25,14 @@
   </div>
 
   <!-- ===================================================
-       PAGE D'ACCUEIL / TUTORIEL
+       PAGE D'ACCUEIL / GUIDE
        =================================================== -->
   <div id="page-home" class="page page--hidden">
 
     <header class="header">
       <img src="assets/logo.svg" alt="Logo AERIS" class="header__logo">
       <div class="header__text">
+        <h1 class="header__title">AERIS</h1>
         <p class="header__subtitle">
           Évaluation du risque cyber · supply chain aéronautique &amp; défense · méthode EBIOS RM
         </p>
@@ -48,9 +49,7 @@
           AERIS vous permet d'identifier, scorer et prioriser les risques cyber
           de vos fournisseurs aéronautiques — en quelques minutes, sans expertise technique préalable.
         </p>
-        <button class="hero__cta" id="btn-go-tool">
-          Accéder à l'outil →
-        </button>
+        <button class="hero__cta" id="btn-go-tool">Accéder à l'outil →</button>
       </section>
 
       <!-- STEPS -->
@@ -139,7 +138,7 @@
           <div class="step__number">4</div>
           <div class="step__content">
             <h3>Ajoutez vos propres fournisseurs</h3>
-            <p>Le formulaire en bas de l'outil vous permet d'ajouter n'importe quel actif. Tapez son nom, choisissez sa catégorie, cliquez "+ Ajouter" — il apparaît immédiatement avec ses curseurs.</p>
+            <p>Le formulaire en bas de l'outil vous permet d'ajouter n'importe quel actif parmi <strong>25 catégories</strong> couvrant tout le secteur aéro/défense. La menace et recommandation se pré-remplissent automatiquement selon la catégorie choisie.</p>
           </div>
         </div>
 
@@ -217,6 +216,7 @@
 
     <main class="main">
 
+      <!-- TABLEAU DE BORD -->
       <section class="dashboard">
         <div class="stats">
           <div class="stat-card">
@@ -243,6 +243,7 @@
         </div>
       </section>
 
+      <!-- LISTE DES ACTIFS -->
       <section class="assets">
         <h2 class="section-title">Actifs (triés par criticité)</h2>
         <div class="assets__list" id="assets-list">
@@ -250,18 +251,70 @@
         </div>
       </section>
 
+      <!-- FORMULAIRE D'AJOUT -->
       <section class="add-asset">
         <h2 class="section-title">Ajouter un actif</h2>
         <form class="add-asset__form" id="add-form">
-          <input type="text" class="add-asset__input" id="input-nom" placeholder="Nom du fournisseur / actif…" required>
+
+          <input
+            type="text"
+            class="add-asset__input"
+            id="input-nom"
+            placeholder="Nom du fournisseur / actif…"
+            required
+          >
+
           <select class="add-asset__select" id="input-categorie">
-            <option value="Avionique">Avionique</option>
-            <option value="Logiciel embarqué">Logiciel embarqué</option>
-            <option value="Supply chain">Supply chain</option>
-            <option value="Maintenance">Maintenance</option>
-            <option value="SI / Données">SI / Données</option>
+            <optgroup label="── Techniques métier ──">
+              <option value="Avionique">Avionique</option>
+              <option value="Logiciel embarqué">Logiciel embarqué</option>
+              <option value="Propulsion">Propulsion</option>
+              <option value="Capteurs & Radar">Capteurs &amp; Radar</option>
+              <option value="Communication">Communication</option>
+              <option value="Navigation">Navigation</option>
+              <option value="Armement">Armement</option>
+              <option value="Structures & Matériaux">Structures &amp; Matériaux</option>
+              <option value="Simulation & Entrainement">Simulation &amp; Entrainement</option>
+            </optgroup>
+            <optgroup label="── Supply chain & production ──">
+              <option value="Supply chain">Supply chain</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Assemblage final">Assemblage final</option>
+              <option value="Logistique">Logistique</option>
+              <option value="Qualité & Certification">Qualité &amp; Certification</option>
+            </optgroup>
+            <optgroup label="── Numérique & données ──">
+              <option value="SI / Données">SI / Données</option>
+              <option value="Infrastructure IT/OT">Infrastructure IT/OT</option>
+              <option value="Cloud & SaaS">Cloud &amp; SaaS</option>
+              <option value="Intelligence Artificielle">Intelligence Artificielle</option>
+              <option value="Cybersécurité">Cybersécurité</option>
+            </optgroup>
+            <optgroup label="── RH & accès ──">
+              <option value="RH / Habilitations">RH / Habilitations</option>
+              <option value="Prestataires & Consultants">Prestataires &amp; Consultants</option>
+              <option value="Formation">Formation</option>
+            </optgroup>
+            <optgroup label="── Réglementaire & gouvernance ──">
+              <option value="Conformité & Audit">Conformité &amp; Audit</option>
+              <option value="Juridique & Contrats">Juridique &amp; Contrats</option>
+            </optgroup>
+            <optgroup label="──────────────────────">
+              <option value="Autre">Autre…</option>
+            </optgroup>
           </select>
+
+          <!-- Champ custom visible uniquement si "Autre" est sélectionné -->
+          <input
+            type="text"
+            class="add-asset__input add-asset__input--custom"
+            id="input-categorie-custom"
+            placeholder="Nom de la catégorie personnalisée…"
+            style="display:none;flex-basis:100%;"
+          >
+
           <button type="submit" class="add-asset__btn">+ Ajouter</button>
+
         </form>
       </section>
 
