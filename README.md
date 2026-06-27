@@ -2,7 +2,7 @@
 
 > Aeronautique & Evaluation des Risques · Supply chain cyber risk assessment for the Aerospace & Defence sector · Based on EBIOS Risk Manager methodology (ANSSI)
 
-![AERIS Screenshot](screenshot.png)
+![AERIS Screenshot](assets/screenshot.png)
 
 ---
 
