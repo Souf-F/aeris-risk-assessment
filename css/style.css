@@ -5,24 +5,26 @@
 
 /* ---- Variables de couleur (change ici pour tout repeindre) ---- */
 :root {
-  --bg:            #0d1b17;   /* fond de page */
-  --surface:       #13261f;   /* cartes, panneaux */
-  --border:        #1e3a30;   /* bordures fines */
-  --accent:        #1D9E75;   /* vert émeraude principal */
-  --accent-light:  #5DCAA5;   /* vert clair (titres, logo) */
-  --text:          #e8f3ee;   /* texte principal */
-  --text-muted:    #7fa896;   /* texte secondaire */
-  --text-faint:    #5a7a6c;   /* texte discret */
+  --bg:           #0d1b17;  /* fond de page */
+  --surface:      #13261f;  /* cartes, panneaux */
+  --border:       #1e3a30;  /* bordures fines */
+  --accent:       #1D9E75;  /* vert émeraude principal */
+  --accent-light: #5DCAA5;  /* vert clair (titres, logo) */
+  --text:         #e8f3ee;  /* texte principal */
+  --text-muted:   #7fa896;  /* texte secondaire */
+  --text-faint:   #5a7a6c;  /* texte discret */
 
-  /* Couleurs de risque (convention métier, ne pas changer) */
-  --risk-low:      #639922;   /* faible  (vert) */
-  --risk-mid:      #BA7517;   /* moyen   (orange) */
-  --risk-high:     #A32D2D;   /* critique (rouge) */
+  /* Couleurs de risque — convention métier, ne pas modifier */
+  --risk-low:  #639922;
+  --risk-mid:  #BA7517;
+  --risk-high: #A32D2D;
 
   --radius: 8px;
 }
 
-/* ---- Reset léger ---- */
+/* =========================================================
+   RESET
+   ========================================================= */
 * {
   margin: 0;
   padding: 0;
@@ -50,24 +52,12 @@ body {
   border-bottom: 1px solid var(--border);
   max-width: 1100px;
   margin: 0 auto;
+  width: 100%;
 }
 
-.header__logo {
-  height: 52px;
-  width: auto;
-}
-
-.header__title {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--accent-light);
-}
-
-.header__subtitle {
-  font-size: 13px;
-  color: var(--text-muted);
-}
+.header__logo   { height: 52px; width: auto; }
+.header__title  { font-size: 24px; font-weight: 600; letter-spacing: 2px; color: var(--accent-light); }
+.header__subtitle { font-size: 13px; color: var(--text-muted); }
 
 /* =========================================================
    STRUCTURE GÉNÉRALE
@@ -92,12 +82,11 @@ body {
    ========================================================= */
 .dashboard {
   display: grid;
-  grid-template-columns: 1fr;
   gap: 24px;
   margin-bottom: 32px;
 }
 
-/* --- chiffres clés --- */
+/* Chiffres clés */
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -127,7 +116,16 @@ body {
 .stat-card__value--moyen    { color: var(--risk-mid); }
 .stat-card__value--ok       { color: var(--accent-light); }
 
-/* --- matrice de risques --- */
+/* Matrice de risques */
+.matrice-wrap__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.matrice-wrap__header .section-title { margin-bottom: 0; }
+
 .matrice {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -135,16 +133,11 @@ body {
   max-width: 220px;
 }
 
-.matrice__cell {
-  aspect-ratio: 1 / 1;
-  border-radius: 2px;
-}
-
-/* la case active (le risque sélectionné) reçoit en plus cette classe */
-.matrice__cell--active {
-  outline: 2px solid var(--text);
-  outline-offset: -1px;
-}
+.matrice__cell        { aspect-ratio: 1 / 1; border-radius: 2px; }
+.matrice__cell--low   { background: #3B6D11; }
+.matrice__cell--mid   { background: #BA7517; }
+.matrice__cell--high  { background: #A32D2D; }
+.matrice__cell--active { outline: 2px solid var(--text); outline-offset: -1px; }
 
 .matrice__axes {
   font-size: 11px;
@@ -152,12 +145,26 @@ body {
   margin-top: 6px;
 }
 
+/* Bouton réinitialiser */
+.btn-reset {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent-light);
+}
+
 /* =========================================================
    ZONE 3 — LISTE DES ACTIFS
    ========================================================= */
-.assets {
-  margin-bottom: 32px;
-}
+.assets { margin-bottom: 32px; }
 
 .assets__empty {
   color: var(--text-faint);
@@ -165,10 +172,10 @@ body {
   padding: 12px 0;
 }
 
-/* --- carte d'un actif (ton JS génère ce bloc) --- */
+/* Carte d'actif */
 .asset-card {
   background: var(--surface);
-  border-left: 3px solid var(--risk-low);  /* changé par JS selon le niveau */
+  border-left: 3px solid var(--risk-low);
   padding: 14px 16px;
   margin-bottom: 10px;
 }
@@ -184,18 +191,10 @@ body {
   gap: 12px;
 }
 
-.asset-card__name {
-  font-size: 15px;
-  font-weight: 500;
-}
+.asset-card__name     { font-size: 15px; font-weight: 500; }
+.asset-card__category { display: block; font-size: 12px; color: var(--text-muted); }
 
-.asset-card__category {
-  display: block;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-/* badge de niveau */
+/* Badge de niveau */
 .badge {
   font-size: 11px;
   padding: 4px 12px;
@@ -207,7 +206,7 @@ body {
 .badge--mid  { background: #633806; color: #FAC775; }
 .badge--high { background: #791F1F; color: #F7C1C1; }
 
-/* lignes de curseurs */
+/* Curseurs */
 .asset-card__slider {
   display: flex;
   align-items: center;
@@ -217,24 +216,11 @@ body {
   color: var(--text-muted);
 }
 
-.asset-card__slider label {
-  width: 90px;
-  flex-shrink: 0;
-}
+.asset-card__slider label        { width: 90px; flex-shrink: 0; }
+.asset-card__slider input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+.asset-card__slider-value        { width: 16px; text-align: right; color: var(--text); }
 
-.asset-card__slider input[type="range"] {
-  flex: 1;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.asset-card__slider-value {
-  width: 16px;
-  text-align: right;
-  color: var(--text);
-}
-
-/* recommandation */
+/* Menace / recommandation */
 .asset-card__reco {
   margin-top: 12px;
   padding-top: 10px;
@@ -243,7 +229,7 @@ body {
   color: var(--text-muted);
 }
 
-/* bouton supprimer */
+/* Bouton supprimer */
 .asset-card__delete {
   background: none;
   border: 1px solid var(--border);
@@ -279,11 +265,7 @@ body {
   color: var(--text);
 }
 
-.add-asset__input {
-  flex: 1;
-  min-width: 180px;
-}
-
+.add-asset__input          { flex: 1; min-width: 180px; }
 .add-asset__input::placeholder { color: var(--text-faint); }
 
 .add-asset__input:focus,
@@ -306,12 +288,9 @@ body {
 .add-asset__btn:hover { background: var(--accent-light); }
 
 /* =========================================================
-   PIED DE PAGE (barre de navigation)
+   PIED DE PAGE
    ========================================================= */
-.footer {
-  background: #000000;
-  border-top: 1px solid var(--border);
-}
+.footer { background: #000; border-top: 1px solid var(--border); }
 
 .footer__inner {
   max-width: 1100px;
@@ -324,10 +303,7 @@ body {
   flex-wrap: wrap;
 }
 
-.footer__copy {
-  font-size: 12px;
-  color: var(--text-faint);
-}
+.footer__copy { font-size: 12px; color: var(--text-faint); }
 
 .footer__github {
   display: inline-flex;
@@ -339,19 +315,14 @@ body {
   transition: color 0.15s;
 }
 
-.footer__github:hover {
-  color: var(--accent-light);
-}
-
-.footer__icon {
-  display: block;
-}
+.footer__github:hover { color: var(--accent-light); }
+.footer__icon { display: block; }
 
 /* =========================================================
-   RESPONSIVE (mobile)
+   RESPONSIVE
    ========================================================= */
 @media (max-width: 640px) {
-  .stats { grid-template-columns: 1fr; }
-  .header__title { font-size: 20px; }
-  .add-asset__input { min-width: 100%; }
+  .stats                { grid-template-columns: 1fr; }
+  .header__title        { font-size: 20px; }
+  .add-asset__input     { min-width: 100%; }
 }
