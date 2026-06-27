@@ -11,12 +11,9 @@ function getScore(actif) {
 // ≤ 6 = low (faible) | 7-14 = mid (moyen) | ≥ 15 = high (critique)
 // =========================================================
 function getNiveau(score) {
-  if (score <= 6)
-    return "low"
-  else if (score > 6 && score <= 14)
-    return "mid"
-  else
-    return "high"
+  if (score <= 6)       return "low"
+  else if (score <= 14) return "mid"
+  else                  return "high"
 }
 
 // =========================================================
@@ -28,24 +25,19 @@ function sauvegarder() {
 
 // =========================================================
 // FONCTION 4 — Génère la matrice de risques 5x5
-// Chaque case est colorée selon probabilite × impact
 // =========================================================
 function renderMatrice() {
   const matrice = document.getElementById("matrice")
   matrice.innerHTML = ""
 
-  // On parcourt les probabilités de 5 à 1 (haut vers bas)
   for (let p = 5; p >= 1; p--) {
-    // On parcourt les impacts de 1 à 5 (gauche vers droite)
     for (let i = 1; i <= 5; i++) {
-      const score = p * i
+      const score  = p * i
       const niveau = getNiveau(score)
+      const cell   = document.createElement("div")
 
-      // On crée une case
-      const cell = document.createElement("div")
       cell.className = `matrice__cell matrice__cell--${niveau}`
 
-      // On marque les cases qui correspondent à un actif existant
       actifs.forEach(function(actif) {
         if (actif.probabilite === p && actif.impact === i) {
           cell.classList.add("matrice__cell--active")
@@ -62,50 +54,38 @@ function renderMatrice() {
 // FONCTION 5 — Génère et affiche toutes les cartes d'actifs
 // =========================================================
 function render() {
-
-  // On récupère le conteneur HTML qui accueille les cartes
   const container = document.getElementById("assets-list")
-
-  // On vide le conteneur avant de le reremplir
   container.innerHTML = ""
 
-  // On parcourt chaque actif pour créer sa carte HTML
   actifs.forEach(function(actif) {
-
-    // On calcule le score et le niveau de cet actif
-    const score = getScore(actif)
+    const score  = getScore(actif)
     const niveau = getNiveau(score)
 
-    // On construit le HTML de la carte avec les données de l'actif
     const html = `<div class="asset-card asset-card--${niveau}">
 
-      <!-- En-tête : nom, catégorie, badge score, bouton supprimer -->
       <div class="asset-card__head">
         <div>
           <span class="asset-card__name">${actif.nom}</span>
           <span class="asset-card__category">${actif.categorie}</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
           <span class="badge badge--${niveau}">Score : ${score}</span>
           <button class="asset-card__delete" id="delete-${actif.id}">Supprimer</button>
         </div>
       </div>
 
-      <!-- Curseur probabilité -->
       <div class="asset-card__slider">
         <label>Probabilité</label>
         <input type="range" min="1" max="5" value="${actif.probabilite}" id="prob-${actif.id}">
         <span class="asset-card__slider-value">${actif.probabilite}</span>
       </div>
 
-      <!-- Curseur impact -->
       <div class="asset-card__slider">
         <label>Impact</label>
         <input type="range" min="1" max="5" value="${actif.impact}" id="impact-${actif.id}">
         <span class="asset-card__slider-value">${actif.impact}</span>
       </div>
 
-      <!-- Menace et recommandation -->
       <div class="asset-card__reco">
         <strong>Menace :</strong> ${actif.menace}<br>
         <strong>Recommandation :</strong> ${actif.recommandation}
@@ -113,18 +93,15 @@ function render() {
 
     </div>`
 
-    // On ajoute la carte dans le conteneur
     container.innerHTML += html
   })
 
-  // On branche les écouteurs sur chaque carte
+  // Branchement des écouteurs sur chaque carte
   actifs.forEach(function(actif) {
-
     const inputProb   = document.getElementById(`prob-${actif.id}`)
     const inputImpact = document.getElementById(`impact-${actif.id}`)
     const btnDelete   = document.getElementById(`delete-${actif.id}`)
 
-    // Curseur probabilité
     inputProb.addEventListener("input", function() {
       actif.probabilite = parseInt(inputProb.value)
       render()
@@ -133,7 +110,6 @@ function render() {
       sauvegarder()
     })
 
-    // Curseur impact
     inputImpact.addEventListener("input", function() {
       actif.impact = parseInt(inputImpact.value)
       render()
@@ -142,11 +118,8 @@ function render() {
       sauvegarder()
     })
 
-    // Bouton supprimer
     btnDelete.addEventListener("click", function() {
-      actifs = actifs.filter(function(a) {
-        return a.id !== actif.id
-      })
+      actifs = actifs.filter(function(a) { return a.id !== actif.id })
       render()
       updateStats()
       renderMatrice()
@@ -154,7 +127,6 @@ function render() {
     })
   })
 
-  // On rafraîchit la matrice après chaque render
   renderMatrice()
 }
 
@@ -162,39 +134,35 @@ function render() {
 // FONCTION 6 — Met à jour les 3 chiffres clés en haut
 // =========================================================
 function updateStats() {
-  let critiques = 0
+  let critiques  = 0
   let totalScore = 0
 
   actifs.forEach(function(actif) {
     const score = getScore(actif)
     totalScore += score
-    if (getNiveau(score) === "high") {
-      critiques += 1
-    }
+    if (getNiveau(score) === "high") critiques += 1
   })
 
   const moyenne = Math.round(totalScore / actifs.length)
 
   document.getElementById("stat-critiques").textContent = critiques
-  document.getElementById("stat-moyen").textContent = moyenne
-  document.getElementById("stat-total").textContent = actifs.length
+  document.getElementById("stat-moyen").textContent     = moyenne
+  document.getElementById("stat-total").textContent     = actifs.length
 }
 
 // =========================================================
-// CHARGEMENT — On récupère les données sauvegardées si elles existent
+// CHARGEMENT — Données sauvegardées dans le localStorage
 // =========================================================
 const donneesSauvegardees = localStorage.getItem("actifs")
 if (donneesSauvegardees) {
   actifs = JSON.parse(donneesSauvegardees)
 }
 
-// On trie une seule fois au chargement
-actifs.sort(function(a, b) {
-  return getScore(b) - getScore(a)
-})
+// Tri une seule fois au chargement
+actifs.sort(function(a, b) { return getScore(b) - getScore(a) })
 
 // =========================================================
-// LANCEMENT DE L'APP
+// LANCEMENT
 // =========================================================
 render()
 updateStats()
@@ -202,11 +170,37 @@ updateStats()
 // =========================================================
 // FORMULAIRE D'AJOUT
 // =========================================================
+const inputCategorie       = document.getElementById("input-categorie")
+const inputCategorieCustom = document.getElementById("input-categorie-custom")
+const inputNom             = document.getElementById("input-nom")
+
+// Affiche / masque le champ custom selon la sélection
+inputCategorie.addEventListener("change", function() {
+  if (inputCategorie.value === "Autre") {
+    inputCategorieCustom.style.display = "block"
+    inputCategorieCustom.required      = true
+  } else {
+    inputCategorieCustom.style.display = "none"
+    inputCategorieCustom.required      = false
+    inputCategorieCustom.value         = ""
+  }
+})
+
+// Soumission du formulaire
 document.getElementById("add-form").addEventListener("submit", function(e) {
   e.preventDefault()
 
-  const nom = document.getElementById("input-nom").value
-  const categorie = document.getElementById("input-categorie").value
+  const nom = inputNom.value.trim()
+
+  // Si "Autre" est sélectionné, on prend le champ custom
+  // Sinon on prend la valeur du select
+  const categorie = inputCategorie.value === "Autre"
+    ? inputCategorieCustom.value.trim()
+    : inputCategorie.value
+
+  // On récupère la recommandation depuis la bibliothèque
+  // Si la catégorie n'existe pas dans la bibliothèque → fallback "Autre"
+  const reco = recommandations[categorie] || recommandations["Autre"]
 
   const nouvelActif = {
     id: Date.now(),
@@ -214,8 +208,8 @@ document.getElementById("add-form").addEventListener("submit", function(e) {
     categorie: categorie,
     probabilite: 1,
     impact: 1,
-    menace: "À définir",
-    recommandation: "À définir"
+    menace: reco.menace,
+    recommandation: reco.recommandation
   }
 
   actifs.push(nouvelActif)
@@ -223,13 +217,16 @@ document.getElementById("add-form").addEventListener("submit", function(e) {
   updateStats()
   sauvegarder()
 
-  // On vide le formulaire après l'ajout
-  document.getElementById("input-nom").value = ""
+  // Réinitialiser le formulaire
+  inputNom.value             = ""
+  inputCategorieCustom.value = ""
+  inputCategorieCustom.style.display = "none"
+  inputCategorieCustom.required      = false
+  inputCategorie.value       = inputCategorie.options[0].value
 })
 
 // =========================================================
 // BOUTON RÉINITIALISER
-// Recharge les données de départ et vide le localStorage
 // =========================================================
 document.getElementById("btn-reset").addEventListener("click", function() {
   if (confirm("Réinitialiser toutes les données ? Les modifications seront perdues.")) {
@@ -241,33 +238,30 @@ document.getElementById("btn-reset").addEventListener("click", function() {
 // =========================================================
 // NAVIGATION — Loader + transitions entre pages
 // =========================================================
-
-// Loader : barre de progression sur 3 secondes
 const loaderBar     = document.getElementById("loader-bar")
 const loaderPercent = document.getElementById("loader-percent")
 const loader        = document.getElementById("loader")
 const pageHome      = document.getElementById("page-home")
 const pageTool      = document.getElementById("page-tool")
 
+// Barre de progression sur ~3 secondes
 let progress = 0
 const interval = setInterval(function() {
   progress += 1
-  loaderBar.style.width = progress + "%"
+  loaderBar.style.width     = progress + "%"
   loaderPercent.textContent = progress + "%"
 
   if (progress >= 100) {
     clearInterval(interval)
-
-    // Petite pause à 100% puis transition vers l'accueil
     setTimeout(function() {
       loader.classList.add("loader--hidden")
       pageHome.classList.remove("page--hidden")
       pageHome.classList.add("page--entering")
     }, 400)
   }
-}, 30) // 30ms × 100 = ~3 secondes
+}, 30)
 
-// Bouton "Accéder à l'outil"
+// Aller vers l'outil
 function goToTool() {
   pageHome.classList.add("page--hidden")
   pageTool.classList.remove("page--hidden")
@@ -275,7 +269,7 @@ function goToTool() {
   window.scrollTo(0, 0)
 }
 
-// Bouton "← Guide"
+// Retour vers l'accueil
 function goToHome() {
   pageTool.classList.add("page--hidden")
   pageHome.classList.remove("page--hidden")
@@ -287,20 +281,22 @@ document.getElementById("btn-go-tool").addEventListener("click", goToTool)
 document.getElementById("btn-go-tool-2").addEventListener("click", goToTool)
 document.getElementById("btn-back").addEventListener("click", goToHome)
 
-// Démo interactive sur la page accueil
+// =========================================================
+// DÉMO INTERACTIVE — curseurs sur la page d'accueil
+// =========================================================
 const demoProb   = document.getElementById("demo-prob")
 const demoImpact = document.getElementById("demo-impact")
 
 function updateDemo() {
-  const p = parseInt(demoProb.value)
-  const i = parseInt(demoImpact.value)
+  const p     = parseInt(demoProb.value)
+  const i     = parseInt(demoImpact.value)
   const score = p * i
 
   document.getElementById("demo-prob-val").textContent   = p
   document.getElementById("demo-impact-val").textContent = i
   document.getElementById("demo-score").textContent      = score
 
-  const badge = document.getElementById("demo-badge")
+  const badge     = document.getElementById("demo-badge")
   badge.textContent = "Score : " + score
   badge.className   = "badge badge--" + (score <= 6 ? "low" : score <= 14 ? "mid" : "high")
 }
