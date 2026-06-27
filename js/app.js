@@ -237,3 +237,73 @@ document.getElementById("btn-reset").addEventListener("click", function() {
     location.reload()
   }
 })
+
+// =========================================================
+// NAVIGATION — Loader + transitions entre pages
+// =========================================================
+
+// Loader : barre de progression sur 3 secondes
+const loaderBar     = document.getElementById("loader-bar")
+const loaderPercent = document.getElementById("loader-percent")
+const loader        = document.getElementById("loader")
+const pageHome      = document.getElementById("page-home")
+const pageTool      = document.getElementById("page-tool")
+
+let progress = 0
+const interval = setInterval(function() {
+  progress += 1
+  loaderBar.style.width = progress + "%"
+  loaderPercent.textContent = progress + "%"
+
+  if (progress >= 100) {
+    clearInterval(interval)
+
+    // Petite pause à 100% puis transition vers l'accueil
+    setTimeout(function() {
+      loader.classList.add("loader--hidden")
+      pageHome.classList.remove("page--hidden")
+      pageHome.classList.add("page--entering")
+    }, 400)
+  }
+}, 30) // 30ms × 100 = ~3 secondes
+
+// Bouton "Accéder à l'outil"
+function goToTool() {
+  pageHome.classList.add("page--hidden")
+  pageTool.classList.remove("page--hidden")
+  pageTool.classList.add("page--entering")
+  window.scrollTo(0, 0)
+}
+
+// Bouton "← Guide"
+function goToHome() {
+  pageTool.classList.add("page--hidden")
+  pageHome.classList.remove("page--hidden")
+  pageHome.classList.add("page--entering")
+  window.scrollTo(0, 0)
+}
+
+document.getElementById("btn-go-tool").addEventListener("click", goToTool)
+document.getElementById("btn-go-tool-2").addEventListener("click", goToTool)
+document.getElementById("btn-back").addEventListener("click", goToHome)
+
+// Démo interactive sur la page accueil
+const demoProb   = document.getElementById("demo-prob")
+const demoImpact = document.getElementById("demo-impact")
+
+function updateDemo() {
+  const p = parseInt(demoProb.value)
+  const i = parseInt(demoImpact.value)
+  const score = p * i
+
+  document.getElementById("demo-prob-val").textContent   = p
+  document.getElementById("demo-impact-val").textContent = i
+  document.getElementById("demo-score").textContent      = score
+
+  const badge = document.getElementById("demo-badge")
+  badge.textContent = "Score : " + score
+  badge.className   = "badge badge--" + (score <= 6 ? "low" : score <= 14 ? "mid" : "high")
+}
+
+demoProb.addEventListener("input", updateDemo)
+demoImpact.addEventListener("input", updateDemo)
