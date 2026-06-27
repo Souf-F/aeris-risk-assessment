@@ -1,0 +1,13 @@
+# Système Mac
+.DS_Store
+
+# Système Windows
+Thumbs.db
+desktop.ini
+
+# Editeurs
+.vscode/
+.idea/
+
+# Logs
+*.log
