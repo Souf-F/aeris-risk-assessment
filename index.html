@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AERIS — Évaluation du risque cyber</title>
+  <meta name="description" content="Outil d'évaluation du risque cyber appliqué à la supply chain aéronautique et défense, structuré selon la méthode EBIOS Risk Manager.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <img src="assets/logo.svg" alt="Logo AERIS" class="header__logo">
+    <div class="header__text">
+      <p class="header__subtitle">Évaluation du risque cyber · supply chain aéronautique &amp; défense · méthode EBIOS RM</p>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ===== ZONE 2 : tableau de bord ===== -->
+    <section class="dashboard">
+
+      <div class="stats">
+        <div class="stat-card">
+          <span class="stat-card__label">Risques critiques</span>
+          <span class="stat-card__value stat-card__value--critique" id="stat-critiques">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Score moyen</span>
+          <span class="stat-card__value stat-card__value--moyen" id="stat-moyen">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Actifs évalués</span>
+          <span class="stat-card__value stat-card__value--ok" id="stat-total">0</span>
+        </div>
+      </div>
+
+      <div class="matrice-wrap">
+        <h2 class="section-title">Matrice de risques</h2>
+        <!-- Ton JS génèrera les 25 cases ici (5x5) -->
+        <div class="matrice" id="matrice"></div>
+        <p class="matrice__axes">impact → / probabilité ↑</p>
+      </div>
+
+    </section>
+
+    <!-- ===== ZONE 3 : liste des actifs ===== -->
+    <section class="assets">
+      <h2 class="section-title">Actifs (triés par criticité)</h2>
+      <!-- Ton JS génèrera les cartes d'actifs ici -->
+      <div class="assets__list" id="assets-list">
+        <p class="assets__empty" id="assets-empty">Aucun actif pour le moment.</p>
+      </div>
+    </section>
+
+    <!-- ===== ZONE 4 : ajout d'un actif ===== -->
+    <section class="add-asset">
+      <h2 class="section-title">Ajouter un actif</h2>
+      <form class="add-asset__form" id="add-form">
+        <input type="text" class="add-asset__input" id="input-nom" placeholder="Nom du fournisseur / actif…" required>
+        <select class="add-asset__select" id="input-categorie">
+          <option value="Avionique">Avionique</option>
+          <option value="Logiciel embarqué">Logiciel embarqué</option>
+          <option value="Supply chain">Supply chain</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="SI / Données">SI / Données</option>
+        </select>
+        <button type="submit" class="add-asset__btn">+ Ajouter</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copy">© 2026 AERIS — Tous droits réservés</p>
+      <a class="footer__github" href="https://github.com/Souf-F" target="_blank" rel="noopener">
+        <svg class="footer__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.04-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.28 0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/>
+        </svg>
+        <span>Souf-F</span>
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
