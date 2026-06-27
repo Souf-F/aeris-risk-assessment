@@ -1,0 +1,30 @@
+<svg width="420" height="180" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo AERIS">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1D9E75"/>
+      <stop offset="100%" stop-color="#0F6E56"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bouclier -->
+  <g transform="translate(20,18)">
+    <path d="M70 0 L130 22 L130 86 Q130 140 70 165 Q10 140 10 86 L10 22 Z"
+			fill="url(#shieldGrad)" stroke="#04342C" stroke-width="2"/>
+    <!-- Ligne de signal / pic de risque -->
+    <path d="M38 70 L62 70 L72 48 L88 108 L100 82 L112 82"
+          fill="none" stroke="#E1F5EE" stroke-width="5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Reflet haut -->
+    <path d="M70 0 L130 22 L130 50 Q98 38 70 36 Q42 38 10 50 L10 22 Z"
+          fill="#5DCAA5" opacity="0.35"/>
+  </g>
+
+  <!-- Texte -->
+  <g transform="translate(175,40)">
+    <text x="0" y="55" font-family="Arial, Helvetica, sans-serif" font-size="68"
+          font-weight="700" letter-spacing="3" fill="#0F6E56">AERIS</text>
+    <rect x="2" y="76" width="232" height="3" fill="#1D9E75"/>
+    <text x="2" y="102" font-family="Arial, Helvetica, sans-serif" font-size="14"
+          font-weight="400" letter-spacing="0.5" fill="#5F5E5A">Aeronautique &amp; Evaluation des Risques</text>
+  </g>
+</svg>

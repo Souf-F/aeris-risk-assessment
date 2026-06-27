@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AERIS">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1D9E75"/>
+      <stop offset="100%" stop-color="#0F6E56"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 4 L56 13 L56 38 Q56 54 32 62 Q8 54 8 38 L8 13 Z"
+        fill="url(#fg)" stroke="#04342C" stroke-width="1.5"/>
+  <path d="M19 33 L28 33 L32 23 L39 47 L43 38 L48 38"
+        fill="none" stroke="#E1F5EE" stroke-width="3.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
