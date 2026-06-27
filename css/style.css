@@ -1,0 +1,357 @@
+/* =========================================================
+   AERIS — feuille de style
+   Palette A : cyber émeraude
+   ========================================================= */
+
+/* ---- Variables de couleur (change ici pour tout repeindre) ---- */
+:root {
+  --bg:            #0d1b17;   /* fond de page */
+  --surface:       #13261f;   /* cartes, panneaux */
+  --border:        #1e3a30;   /* bordures fines */
+  --accent:        #1D9E75;   /* vert émeraude principal */
+  --accent-light:  #5DCAA5;   /* vert clair (titres, logo) */
+  --text:          #e8f3ee;   /* texte principal */
+  --text-muted:    #7fa896;   /* texte secondaire */
+  --text-faint:    #5a7a6c;   /* texte discret */
+
+  /* Couleurs de risque (convention métier, ne pas changer) */
+  --risk-low:      #639922;   /* faible  (vert) */
+  --risk-mid:      #BA7517;   /* moyen   (orange) */
+  --risk-high:     #A32D2D;   /* critique (rouge) */
+
+  --radius: 8px;
+}
+
+/* ---- Reset léger ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   EN-TÊTE
+   ========================================================= */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header__logo {
+  height: 52px;
+  width: auto;
+}
+
+.header__title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent-light);
+}
+
+.header__subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   STRUCTURE GÉNÉRALE
+   ========================================================= */
+.main {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  flex: 1 0 auto;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   ZONE 2 — TABLEAU DE BORD
+   ========================================================= */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* --- chiffres clés --- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.stat-card__label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stat-card__value {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.stat-card__value--critique { color: var(--risk-high); }
+.stat-card__value--moyen    { color: var(--risk-mid); }
+.stat-card__value--ok       { color: var(--accent-light); }
+
+/* --- matrice de risques --- */
+.matrice {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  max-width: 220px;
+}
+
+.matrice__cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+}
+
+/* la case active (le risque sélectionné) reçoit en plus cette classe */
+.matrice__cell--active {
+  outline: 2px solid var(--text);
+  outline-offset: -1px;
+}
+
+.matrice__axes {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+
+/* =========================================================
+   ZONE 3 — LISTE DES ACTIFS
+   ========================================================= */
+.assets {
+  margin-bottom: 32px;
+}
+
+.assets__empty {
+  color: var(--text-faint);
+  font-size: 14px;
+  padding: 12px 0;
+}
+
+/* --- carte d'un actif (ton JS génère ce bloc) --- */
+.asset-card {
+  background: var(--surface);
+  border-left: 3px solid var(--risk-low);  /* changé par JS selon le niveau */
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.asset-card--low  { border-left-color: var(--risk-low); }
+.asset-card--mid  { border-left-color: var(--risk-mid); }
+.asset-card--high { border-left-color: var(--risk-high); }
+
+.asset-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.asset-card__name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.asset-card__category {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* badge de niveau */
+.badge {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.badge--low  { background: #27500A; color: #C0DD97; }
+.badge--mid  { background: #633806; color: #FAC775; }
+.badge--high { background: #791F1F; color: #F7C1C1; }
+
+/* lignes de curseurs */
+.asset-card__slider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.asset-card__slider label {
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.asset-card__slider input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.asset-card__slider-value {
+  width: 16px;
+  text-align: right;
+  color: var(--text);
+}
+
+/* recommandation */
+.asset-card__reco {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* bouton supprimer */
+.asset-card__delete {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.asset-card__delete:hover {
+  border-color: var(--risk-high);
+  color: var(--risk-high);
+}
+
+/* =========================================================
+   ZONE 4 — AJOUT D'UN ACTIF
+   ========================================================= */
+.add-asset__form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.add-asset__input,
+.add-asset__select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.add-asset__input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.add-asset__input::placeholder { color: var(--text-faint); }
+
+.add-asset__input:focus,
+.add-asset__select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.add-asset__btn {
+  background: var(--accent);
+  color: #04342C;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-asset__btn:hover { background: var(--accent-light); }
+
+/* =========================================================
+   PIED DE PAGE (barre de navigation)
+   ========================================================= */
+.footer {
+  background: #000000;
+  border-top: 1px solid var(--border);
+}
+
+.footer__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer__copy {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.footer__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer__github:hover {
+  color: var(--accent-light);
+}
+
+.footer__icon {
+  display: block;
+}
+
+/* =========================================================
+   RESPONSIVE (mobile)
+   ========================================================= */
+@media (max-width: 640px) {
+  .stats { grid-template-columns: 1fr; }
+  .header__title { font-size: 20px; }
+  .add-asset__input { min-width: 100%; }
+}
